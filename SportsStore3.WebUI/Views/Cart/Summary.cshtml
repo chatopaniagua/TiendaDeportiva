@@ -1,0 +1,46 @@
+﻿@model SportsStore3.Domain.Entities.Cart
+
+@*<div class="navbar-right">
+        @Html.ActionLink("Checkout", "Index", "Cart",
+    new { returnUrl = Request.Url.PathAndQuery },
+    new { @class = "btn btn-default navbar-btn" })
+    </div>
+    <div class="navbar-text navbar-right">
+        <b>Your cart:</b>
+        @Model.Lines.Sum(x => x.Quantity) item(s),
+        @Model.ComputeTotalValue().ToString("c")
+    </div>*@
+
+<h2>Cart</h2>
+<ul class="cd-cart-items">
+
+    @{
+        if (Model.Lines.Count() > 0)
+        {
+            foreach (var line in Model.Lines)
+            {
+                <li>
+                    <span class="cd-qty">@line.Quantity x </span> @line.Product.Name
+                    <h4><span class="label label-primary">@((line.Product.Price * line.Quantity).ToString("c"))</span></h4>
+                    <a href="#0" class="cd-item-remove cd-img-replace">Remove</a>
+                </li>
+            }
+        }
+        else
+        {
+            <li class="empty-cart-msg">Your cart is empty!</li>
+        }
+
+    }
+
+</ul>
+
+<div class="cd-cart-total">
+    <p>Total <span>@Model.ComputeTotalValue().ToString("c")</span></p>
+</div>
+
+@*<a href="#0" class="checkout-btn">Checkout</a>*@
+@Html.ActionLink("Checkout","Checkout",null, new { @class = "checkout-btn" })
+
+@*<p class="cd-go-to-cart"><a href="#0">Go to cart page</a></p>*@
+@Html.ActionLink("Go to cart page","Index",null, new { @class="cd-go-to-cart"})
